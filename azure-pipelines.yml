@@ -16,3 +16,17 @@ steps:
     KeyVaultName: 'ghkeyvault02'
     SecretsFilter: '*'
     RunAsPreJob: false
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'DevOpsSC'
+    subscriptionId: 'a0cc4ba4-d1a3-4227-a3dc-5557f62a093f'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'AzureDevOps'
+    location: 'Australia East'
+    templateLocation: 'Linked artifact'
+    csmFile: 'azuredeploy.json'
+    csmParametersFile: 'azuredeploy.parameters.json'
+    overrideParameters: '-adminPassword $(LocalAdmin)'
+    deploymentMode: 'Incremental'
+    deploymentName: 'TemplateDeploy'
